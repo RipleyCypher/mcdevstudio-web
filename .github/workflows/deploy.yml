@@ -20,10 +20,13 @@ jobs:
           key: ${{ secrets.VPS_SECRET_FOR_DEPLOYER }}
           envs: GITHUB_TOKEN
           script: |
-            if [ ! -d "/home/deployer/web/mcdevstudio.com/public_html/.git" ]; then
-              rm -rf /home/deployer/web/mcdevstudio.com/public_html
-              git clone https://x-access-token:${GITHUB_TOKEN}@github.com/RipleyCypher/mcdevstudio-web.git /home/deployer/web/mcdevstudio.com/public_html
+            WEB_ROOT="/home/cpadmin/web/mcdevstudio.com/public_html"
+            cd "$WEB_ROOT"
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin https://x-access-token:${GITHUB_TOKEN}@github.com/RipleyCypher/mcdevstudio-web.git
+              git fetch origin
+              git checkout -f main
             else
-              cd /home/deployer/web/mcdevstudio.com/public_html
               git pull https://x-access-token:${GITHUB_TOKEN}@github.com/RipleyCypher/mcdevstudio-web.git main
             fi
