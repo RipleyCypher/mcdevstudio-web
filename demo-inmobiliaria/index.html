@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carlos Martín | Asesor Inmobiliario Madrid</title>
+
+  <!-- n8n Chat widget (CDN, sin npm) -->
+  <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --cream: #F7F2EA;
+      --cream-dark: #EDE6D8;
+      --navy: #1A2B3C;
+      --navy-light: #2C4159;
+      --gold: #B8973A;
+      --gold-light: #D4AF5A;
+      --text: #2A2A2A;
+      --text-muted: #7A7A7A;
+      --white: #FFFFFF;
+
+      /* ── n8n chat CSS overrides ── */
+      --chat--color-primary: #1A2B3C;
+      --chat--color-primary-shade-50: #2C4159;
+      --chat--color-primary-shade-100: #3D5875;
+      --chat--color-secondary: #B8973A;
+      --chat--color-secondary-shade-50: #D4AF5A;
+      --chat--color-white: #ffffff;
+      --chat--color-light: #F7F2EA;
+      --chat--color-light-shade-50: #EDE6D8;
+      --chat--color-light-shade-100: #E0D8C8;
+      --chat--color-medium: #7A7A7A;
+      --chat--color-dark: #1A2B3C;
+      --chat--color-disabled: #9CA3AF;
+      --chat--color-typing: #1A2B3C;
+
+      --chat--spacing: 1rem;
+      --chat--border-radius: 0px;
+      --chat--transition-duration: 0.2s;
+
+      --chat--window--width: 380px;
+      --chat--window--height: 520px;
+
+      --chat--header--padding: 1.2rem 1.4rem;
+      --chat--header--background: #1A2B3C;
+      --chat--header--color: #ffffff;
+      --chat--header--border-bottom: 1px solid rgba(184,151,58,0.2);
+
+      --chat--heading--font-size: 1rem;
+      --chat--subtitle--font-size: 0.78rem;
+
+      --chat--textarea--height: 44px;
+
+      --chat--message--font-size: 0.88rem;
+      --chat--message--padding: 0.7rem 1rem;
+      --chat--message--border-radius: 0px;
+      --chat--message-line-height: 1.55;
+      --chat--message--bot--background: #ffffff;
+      --chat--message--bot--color: #2A2A2A;
+      --chat--message--bot--border: 1px solid #EDE6D8;
+      --chat--message--user--background: #1A2B3C;
+      --chat--message--user--color: #ffffff;
+
+      --chat--toggle--background: #1A2B3C;
+      --chat--toggle--hover--background: #B8973A;
+      --chat--toggle--active--background: #B8973A;
+      --chat--toggle--color: #ffffff;
+      --chat--toggle--size: 58px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(247, 242, 234, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184, 151, 58, 0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%; right: -5%;
+      width: 55%; height: 110%;
+      background: var(--navy);
+      clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+      z-index: 0;
+    }
+
+    .hero-text { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 30px; height: 2px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em { font-style: italic; color: var(--gold); }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 460px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--navy);
+      color: var(--white);
+      padding: 1rem 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .hero-cta:hover { background: var(--gold); transform: translateY(-2px); }
+    .hero-cta svg { transition: transform 0.3s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    .hero-image-col {
+      position: relative; z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .agent-card {
+      background: var(--white);
+      padding: 2.5rem;
+      width: 360px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.25);
+      position: relative;
+    }
+
+    .agent-card::before {
+      content: '';
+      position: absolute;
+      top: -8px; left: -8px; right: 8px; bottom: 8px;
+      border: 2px solid var(--gold);
+      pointer-events: none;
+    }
+
+    .agent-avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+
+    .agent-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+
+    .agent-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .agent-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      border-top: 1px solid var(--cream-dark);
+      padding-top: 1.5rem;
+    }
+
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    /* ── SHARED ── */
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    /* ── SERVICIOS ── */
+    .servicios { padding: 6rem 4rem; background: var(--white); }
+    .servicios-header { max-width: 600px; margin-bottom: 4rem; }
+
+    .servicios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .servicio-card {
+      background: var(--cream);
+      padding: 2.5rem;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .servicio-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 3px;
+      background: var(--gold);
+      transition: width 0.4s;
+    }
+
+    .servicio-card:hover { background: var(--cream-dark); }
+    .servicio-card:hover::after { width: 100%; }
+
+    .servicio-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--cream-dark);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color 0.3s;
+    }
+
+    .servicio-card:hover .servicio-num { color: var(--gold-light); }
+    .servicio-title { font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: 0.8rem; }
+    .servicio-desc { font-size: 0.9rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── PROCESO ── */
+    .proceso { padding: 6rem 4rem; background: var(--navy); color: var(--white); }
+    .proceso-header { margin-bottom: 4rem; }
+    .proceso-header .section-eyebrow { color: var(--gold-light); }
+    .proceso-header .section-eyebrow::before { background: var(--gold-light); }
+    .proceso-header .section-title { color: var(--white); }
+
+    .proceso-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      position: relative;
+    }
+
+    .proceso-steps::before {
+      content: '';
+      position: absolute;
+      top: 2rem;
+      left: calc(16.66% + 1.5rem);
+      right: calc(16.66% + 1.5rem);
+      height: 1px;
+      background: rgba(184, 151, 58, 0.3);
+    }
+
+    .paso-num {
+      width: 4rem; height: 4rem;
+      background: var(--gold);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .paso-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.8rem; }
+    .paso-desc { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+    /* ── TESTIMONIOS ── */
+    .testimonios { padding: 6rem 4rem; background: var(--cream); }
+    .testimonios-header { margin-bottom: 3rem; }
+
+    .testimonios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .testimonio { background: var(--white); padding: 2rem; border-left: 3px solid var(--gold); }
+    .testimonio-text { font-size: 0.92rem; font-style: italic; color: var(--text); line-height: 1.7; margin-bottom: 1.2rem; }
+    .testimonio-autor { font-size: 0.8rem; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 0.08em; }
+    .testimonio-zona { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--white); }
+    .footer-logo span { color: var(--gold); }
+    .footer-text { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+      .hero::before { display: none; }
+      .hero-image-col { display: none; }
+      .servicios, .proceso, .testimonios { padding: 4rem 1.5rem; }
+      .servicios-grid, .proceso-steps, .testimonios-grid { grid-template-columns: 1fr; }
+      .proceso-steps::before { display: none; }
+      footer { flex-direction: column; gap: 1rem; padding: 1.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Carlos<span>.</span>Martín</div>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#proceso">Cómo funciona</a></li>
+      <li><a href="#testimonios">Testimonios</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Asesor Inmobiliario en Madrid</p>
+      <h1 class="hero-title">
+        Tu piso vendido<br>
+        al precio <em>justo</em>,<br>
+        sin perder tiempo.
+      </h1>
+      <p class="hero-subtitle">
+        Acompaño compradores y vendedores en Madrid desde hace más de 10 años. Respuesta inmediata, trato personal, sin letra pequeña.
+      </p>
+      <button class="hero-cta" onclick="document.querySelector('.n8n-chat-window-toggle')?.click()">
+        Habla conmigo ahora
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+    <div class="hero-image-col">
+      <div class="agent-card">
+        <div class="agent-avatar">CM</div>
+        <div class="agent-name">Carlos Martín</div>
+        <div class="agent-title">Asesor Inmobiliario Independiente</div>
+        <div class="agent-stats">
+          <div><div class="stat-value">+200</div><div class="stat-label">Operaciones cerradas</div></div>
+          <div><div class="stat-value">10+</div><div class="stat-label">Años en Madrid</div></div>
+          <div><div class="stat-value">4.9★</div><div class="stat-label">Valoración Google</div></div>
+          <div><div class="stat-value">2h</div><div class="stat-label">Tiempo de respuesta</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="servicios" id="servicios">
+    <div class="servicios-header">
+      <p class="section-eyebrow">En qué puedo ayudarte</p>
+      <h2 class="section-title">Un asesor para cada momento del proceso</h2>
+    </div>
+    <div class="servicios-grid">
+      <div class="servicio-card">
+        <div class="servicio-num">01</div>
+        <div class="servicio-title">Compra de vivienda</div>
+        <div class="servicio-desc">Te acompaño desde la búsqueda hasta la firma. Analizo cada opción, negocio el precio y te evito errores costosos.</div>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-num">02</div>
+        <div class="servicio-title">Venta de tu inmueble</div>
+        <div class="servicio-desc">Valoro tu propiedad al precio de mercado real, gestiono visitas y filtro compradores serios. Sin perder tiempo en curiosos.</div>
+      </div>
+      <div class="servicio-card">
+        <div class="servicio-num">03</div>
+        <div class="servicio-title">Alquiler y gestión</div>
+        <div class="servicio-desc">Busco el inquilino adecuado, redacto el contrato y me encargo de los trámites para que no tengas que preocuparte.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="proceso" id="proceso">
+    <div class="proceso-header">
+      <p class="section-eyebrow">Así de sencillo</p>
+      <h2 class="section-title">Cómo empezamos a trabajar juntos</h2>
+    </div>
+    <div class="proceso-steps">
+      <div class="paso">
+        <div class="paso-num">1</div>
+        <div class="paso-title">Cuéntame qué necesitas</div>
+        <div class="paso-desc">Escríbeme por el chat o llámame. En menos de 2 horas te respondo con opciones concretas para tu situación.</div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">2</div>
+        <div class="paso-title">Consulta gratuita de 20 minutos</div>
+        <div class="paso-desc">Sin compromiso. Analizamos tu caso, te explico el mercado actual en tu zona y definimos la mejor estrategia.</div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">3</div>
+        <div class="paso-title">Empezamos a trabajar</div>
+        <div class="paso-desc">Solo cobro si cierro la operación. Sin costes iniciales ni letra pequeña. Tu riesgo es cero.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonios" id="testimonios">
+    <div class="testimonios-header">
+      <p class="section-eyebrow">Lo que dicen mis clientes</p>
+      <h2 class="section-title">Resultados que hablan por sí solos</h2>
+    </div>
+    <div class="testimonios-grid">
+      <div class="testimonio">
+        <p class="testimonio-text">"Vendimos en 3 semanas al precio que pedíamos. Carlos filtró todo y nosotros solo tuvimos que firmar."</p>
+        <div class="testimonio-autor">Marta R.</div>
+        <div class="testimonio-zona">Chamberí · Vendedora</div>
+      </div>
+      <div class="testimonio">
+        <p class="testimonio-text">"Llevaba 6 meses buscando solo y en dos semanas con Carlos encontré el piso que quería, por debajo de precio."</p>
+        <div class="testimonio-autor">David P.</div>
+        <div class="testimonio-zona">Retiro · Comprador</div>
+      </div>
+      <div class="testimonio">
+        <p class="testimonio-text">"Tenía dudas sobre alquilar o vender. Me explicó todo sin presionarme y acabé tomando la mejor decisión."</p>
+        <div class="testimonio-autor">Ana L.</div>
+        <div class="testimonio-zona">Latina · Propietaria</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Carlos<span>.</span>Martín</div>
+    <div class="footer-text">carlos@carlosmartinasesor.es · Madrid</div>
+  </footer>
+
+  <!-- n8n Chat widget: CDN, sin npm/pnpm, sin riesgo del ataque -->
+  <script type="module">
+    import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+    createChat({
+      webhookUrl: 'https://n8n.btcconsulting360.com/webhook/53c136fe-3e77-4709-a143-fe82746dd8b6/chat',
+      mode: 'window',
+      showWelcomeScreen: false,
+      loadPreviousSession: false,
+      defaultLanguage: 'es',
+      initialMessages: [
+        '¡Hola! Soy el asistente de Carlos. ¿Estás buscando comprar, vender o alquilar en Madrid?'
+      ],
+      i18n: {
+        es: {
+          title: 'Asistente de Carlos',
+          subtitle: 'Respuesta en menos de 2 horas',
+          footer: '',
+          getStarted: 'Iniciar conversación',
+          inputPlaceholder: 'Escribe tu mensaje...',
+          closeButtonTooltip: 'Cerrar chat',
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

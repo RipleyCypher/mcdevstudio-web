@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MCDevStudio — Tecnología que trabaja para tu negocio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png" />
+  <link rel="manifest" href="favicon_io/site.webmanifest" />
+  <style>
+    :root {
+      /* warm-soft inverted to dark */
+      --bg:      oklch(12% 0.018 50);
+      --surface: oklch(17% 0.022 50);
+      --fg:      oklch(93% 0.012 70);
+      --muted:   oklch(60% 0.015 55);
+      --border:  oklch(27% 0.018 50);
+      --accent:  oklch(64% 0.13 28);
+
+      --font-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+      --font-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+      --max-w:  740px;
+      --pad:    clamp(20px, 5vw, 52px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.8vw, 18px);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px var(--pad);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-wordmark {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--fg);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.15s;
+    }
+
+    .nav-link:hover { color: var(--fg); }
+
+    /* ── Section shell ── */
+    section {
+      padding: clamp(72px, 10vw, 128px) var(--pad);
+      border-top: 1px solid var(--border);
+    }
+
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 36px;
+    }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 86vh;
+      display: flex;
+      align-items: center;
+      border-top: none;
+      padding-top: clamp(80px, 12vw, 140px);
+      padding-bottom: clamp(80px, 12vw, 140px);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6.5vw, 80px);
+      line-height: 1.06;
+      letter-spacing: -0.025em;
+      font-weight: 400;
+      color: var(--fg);
+      margin-bottom: 28px;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    h1 em { font-style: italic; }
+
+    .hero-sub {
+      font-size: clamp(17px, 2.2vw, 20px);
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.55;
+      margin-bottom: 52px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: oklch(97% 0.012 70);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.01em;
+      transition: opacity 0.15s;
+    }
+
+    .btn-primary:hover { opacity: 0.86; }
+
+    /* ── El problema ── */
+    .problema-lead {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.38;
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    .problema-body {
+      font-size: clamp(16px, 1.8vw, 18px);
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 640px;
+    }
+
+    /* ── Cómo ayudo ── */
+    .ayudo-list { margin-top: 0; }
+
+    .ayudo-item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 0 28px;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ayudo-item:first-child { border-top: 1px solid var(--border); }
+
+    .ayudo-num {
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 4px;
+      font-variant-numeric: tabular-nums;
+      font-family: var(--font-body);
+    }
+
+    .ayudo-item h3 {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .ayudo-item p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    /* ── Por qué yo ── */
+    #porque p {
+      font-size: clamp(17px, 2vw, 20px);
+      line-height: 1.65;
+      max-width: 600px;
+    }
+
+    #porque p + p {
+      margin-top: 20px;
+      color: var(--muted);
+    }
+
+    /* ── Casos ── */
+    .casos-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    @media (min-width: 600px) {
+      .casos-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (min-width: 960px) {
+      .casos-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    .caso {
+      background: var(--surface);
+      padding: 36px 32px 40px;
+    }
+
+    .caso-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .caso p {
+      font-size: 15px;
+      line-height: 1.68;
+      color: var(--fg);
+      opacity: 0.82;
+    }
+
+    .caso-result {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .caso-stat {
+      font-family: var(--font-display);
+      font-size: 44px;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .caso-stat-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── Contacto ── */
+    #contacto h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4.5vw, 52px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      margin-bottom: 18px;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    .contacto-intro {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 52px;
+      max-width: 440px;
+      line-height: 1.65;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 52px;
+    }
+
+    @media (min-width: 640px) {
+      .contact-layout { grid-template-columns: 1fr 1fr; gap: 72px; }
+    }
+
+    form { display: flex; flex-direction: column; gap: 24px; }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 15px;
+      padding: 12px 16px;
+      outline: none;
+      border-radius: 0;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+
+    input:focus,
+    textarea:focus { border-color: var(--accent); }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    input::placeholder,
+    textarea::placeholder { color: var(--muted); opacity: 0.5; }
+
+    .form-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: -8px;
+    }
+
+    .alt-contact h3 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+
+    .alt-contact p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 13px 24px;
+      border: 1px solid var(--border);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 14px;
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+
+    .btn-secondary:hover { border-color: var(--fg); }
+
+    /* ── Footer ── */
+    footer {
+      padding: 28px var(--pad);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--fg); }
+
+    /* ── Reveal on scroll ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Mobile menu ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--fg);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 98;
+      background: var(--bg);
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 80px var(--pad) var(--pad);
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 9vw, 48px);
+      font-weight: 400;
+      color: var(--fg);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      transition: color 0.15s;
+    }
+
+    .mobile-menu a:hover { color: var(--muted); }
+    .mobile-menu .mobile-cta { color: var(--accent); margin-top: 24px; }
+
+    @media (max-width: 639px) {
+      .nav-hamburger { display: flex; }
+      .nav-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-wordmark">MCDevStudio</a>
+    <a href="#contacto" class="nav-link">Cuéntame tu caso →</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Menú de navegación">
+    <a href="#problema" class="mobile-link">El problema</a>
+    <a href="#ayudo" class="mobile-link">Cómo ayudo</a>
+    <a href="#porque" class="mobile-link">Por qué yo</a>
+    <a href="#casos" class="mobile-link">Casos</a>
+    <a href="#contacto" class="mobile-link mobile-cta">Cuéntame tu caso →</a>
+  </div>
+
+  <main>
+
+    <!-- 1. HERO ──────────────────────────────────────── -->
+    <section id="hero">
+      <div class="container">
+        <p class="hero-eyebrow">Consultoría tecnológica independiente</p>
+        <h1 data-od-id="hero-headline">
+          Tu reputación es buena.<br>
+          <em>Online, todavía nadie lo sabe.</em>
+        </h1>
+        <p class="hero-sub">Ayudo a pequeños negocios con años de experiencia a tener una presencia digital a la altura de lo que ofrecen. Sin jerga técnica, sin promesas vacías.</p>
+        <a href="#contacto" class="btn-primary">Cuéntame tu caso</a>
+      </div>
+    </section>
+
+    <!-- 2. EL PROBLEMA ───────────────────────────────── -->
+    <section id="problema">
+      <div class="container">
+        <p class="section-label">El problema habitual</p>
+        <p class="problema-lead reveal" data-od-id="problema-lead">
+          Tienes clientes satisfechos, trabajo constante y una reputación ganada con esfuerzo. Pero cuando alguien te busca en internet, lo que encuentra no te hace justicia.
+        </p>
+        <p class="problema-body reveal reveal-delay-1">
+          O no tienes web. O la tienes pero no convierte. O hay procesos internos que siguen funcionando a mano cuando ya no tendría que ser así. No es un problema raro: es muy habitual en negocios serios que han crecido gracias al boca a boca y que llevan tiempo sin tiempo para ponerse con la parte digital.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. CÓMO AYUDO ───────────────────────────────── -->
+    <section id="ayudo">
+      <div class="container">
+        <p class="section-label">Cómo ayudo</p>
+        <div class="ayudo-list" data-od-id="ayudo-grid">
+          <div class="ayudo-item reveal">
+            <span class="ayudo-num">01</span>
+            <div>
+              <h3>Web que convierte</h3>
+              <p>Para negocios sin web o con una que no está funcionando. No hago plantillas genéricas. Parto de cómo funciona tu negocio y construyo algo que tiene sentido para ti: claro, rápido, con un propósito concreto.</p>
+            </div>
+          </div>
+          <div class="ayudo-item reveal">
+            <span class="ayudo-num">02</span>
+            <div>
+              <h3>Automatizaciones que ahorran tiempo real</h3>
+              <p>Si tienes procesos que se hacen a mano y podrían hacerse solos, los automatizo. Desde confirmaciones de pedidos hasta publicación de contenidos. Ese tiempo lo recuperas para lo que importa.</p>
+            </div>
+          </div>
+          <div class="ayudo-item reveal">
+            <span class="ayudo-num">03</span>
+            <div>
+              <h3>Sistemas que trabajan cuando tú no puedes</h3>
+              <p>Respuestas automáticas, chatbots con contexto real de tu negocio, sistemas de atención fuera de horario. No robots genéricos: algo que entiende de qué va tu negocio y responde en consecuencia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. POR QUÉ YO ───────────────────────────────── -->
+    <section id="porque">
+      <div class="container">
+        <p class="section-label">Por qué yo</p>
+        <p class="reveal" data-od-id="porque-lead">Llevo más de 20 años resolviendo problemas con tecnología. No soy una agencia ni una startup con inversión. Soy una profesional independiente con criterio y sin interés en venderte lo que no necesitas.</p>
+        <p class="reveal reveal-delay-1">No te ato a plataformas con cuotas altas. No te propongo algo complicado cuando una solución sencilla funciona igual. Y si lo que necesitas no lo puedo hacer bien, te lo digo antes de empezar.</p>
+      </div>
+    </section>
+
+    <!-- 5. CASOS ─────────────────────────────────────── -->
+    <section id="casos">
+      <div class="container">
+        <p class="section-label">Proyectos recientes</p>
+        <div class="casos-grid" data-od-id="casos-grid">
+          <div class="caso reveal">
+            <p class="caso-tag">Empresa de formación</p>
+            <p>Actualizaban el estado de sus pedidos a mano, copiando datos entre sistemas. Era un proceso lento, propenso a errores y que ocupaba tiempo real de personas reales. Lo automaticé. Ahora ocurre solo, sin errores, sin que nadie tenga que ocuparse de él.</p>
+            <div class="caso-result">
+              <div class="caso-stat">10h</div>
+              <div class="caso-stat-label">recuperadas cada semana</div>
+            </div>
+          </div>
+          <div class="caso reveal reveal-delay-1">
+            <p class="caso-tag">Negocio de servicios</p>
+            <p>Publicaba en redes cuando podía, que era poco. Tenía un blog con artículos buenos que nadie leía. Monté un sistema que convierte esos artículos en publicaciones para X con IA, con su tono. Ahora publica con regularidad sin dejar de atender a sus clientes.</p>
+            <div class="caso-result">
+              <div class="caso-stat">0h</div>
+              <div class="caso-stat-label">dedicadas a redes cada semana</div>
+            </div>
+          </div>
+          <div class="caso reveal reveal-delay-2">
+            <p class="caso-tag">Centro de estética</p>
+            <p>Llevaban años con una web que daba más vergüenza que confianza. Sus servicios y tarifas no estaban actualizados, no se veía bien en el móvil y no transmitía el cuidado que sí tienen en persona. Rehíce la web desde cero, adaptada a su estética y a su forma de trabajar. Ahora la actualizan ellas mismas cuando cambia algo, y yo estoy ahí cuando lo necesitan.</p>
+            <div class="caso-result">
+              <div class="caso-stat" style="font-size: 32px; padding-top: 4px;">Referente técnica</div>
+              <div class="caso-stat-label">de confianza desde entonces</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CONTACTO ──────────────────────────────────── -->
+    <section id="contacto">
+      <div class="container">
+        <p class="section-label">Hablemos</p>
+        <h2 data-od-id="contacto-headline">Si te has reconocido<br><em>en algo de lo que has leído</em></h2>
+        <p class="contacto-intro">Escríbeme. Sin compromiso. Cuéntame qué tienes entre manos y vemos si tiene sentido trabajar juntos.</p>
+
+        <div class="contact-layout">
+          <form name="contacto" onsubmit="handleSubmit(event)">
+            <div class="field">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+            </div>
+            <div class="field">
+              <label for="mensaje">Cuéntame</label>
+              <textarea id="mensaje" name="mensaje" placeholder="¿Cuál es la situación? No hace falta que sea técnico, cuéntamelo como lo explicarías a un amigo." required></textarea>
+            </div>
+            <div>
+              <button type="submit" class="btn-primary" id="submit-btn">Enviar</button>
+              <p class="form-note" id="form-feedback" style="margin-top:14px;display:none;"></p>
+            </div>
+          </form>
+
+          <div class="alt-contact reveal">
+            <h3>¿Prefieres<br>hablar directamente?</h3>
+            <p>Si lo tuyo es más de WhatsApp que de formularios, escríbeme por ahí. Sin filtros, sin bots, sin tiempos de respuesta de empresa.</p>
+            <!-- Sustituye el número por el tuyo real -->
+            <a href="https://wa.me/34649749646" class="btn-secondary" target="_blank" rel="noopener noreferrer">Escribir por WhatsApp →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>MCDevStudio</p>
+    <p>© 2026</p>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const revealObserver = new IntersectionObserver(
+      entries => entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function closeMobileMenu() {
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Form — webhook n8n
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const feedback = document.getElementById('form-feedback');
+
+      btn.textContent = 'Enviando…';
+      btn.disabled = true;
+      feedback.style.display = 'none';
+
+      const payload = {
+        nombre: document.getElementById('nombre').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        mensaje: document.getElementById('mensaje').value.trim(),
+      };
+
+      try {
+        const res = await fetch('https://n8n.btcconsulting360.com/webhook/contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        btn.textContent = 'Enviado';
+        btn.style.opacity = '0.6';
+        feedback.textContent = 'Gracias. Te escribo en breve.';
+        feedback.style.color = 'var(--fg)';
+      } catch (err) {
+        btn.textContent = 'Enviar';
+        btn.disabled = false;
+        feedback.textContent = 'Algo ha fallado. Escríbeme directamente por WhatsApp.';
+        feedback.style.color = 'var(--accent)';
+      }
+
+      feedback.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

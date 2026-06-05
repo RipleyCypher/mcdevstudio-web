@@ -1,0 +1,29 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SECRET_FOR_DEPLOYER }}
+          envs: GITHUB_TOKEN
+          script: |
+            if [ ! -d "/home/deployer/web/mcdevstudio.com/public_html/.git" ]; then
+              rm -rf /home/deployer/web/mcdevstudio.com/public_html
+              git clone https://x-access-token:${GITHUB_TOKEN}@github.com/RipleyCypher/mcdevstudio-web.git /home/deployer/web/mcdevstudio.com/public_html
+            else
+              cd /home/deployer/web/mcdevstudio.com/public_html
+              git pull https://x-access-token:${GITHUB_TOKEN}@github.com/RipleyCypher/mcdevstudio-web.git main
+            fi

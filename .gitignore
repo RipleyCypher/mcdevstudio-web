@@ -1,0 +1,15 @@
+# Screenshots & artifacts
+.playwright-mcp/
+fisio-clinic-hero.png
+fisio-fullpage.png
+
+# Archives
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
