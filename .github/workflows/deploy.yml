@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.VPS_SECRET_FOR_DEPLOYER }}
           envs: GITHUB_TOKEN
           script: |
-            WEB_ROOT="/home/cpadmin/web/mcdevstudio.com/public_html"
+            WEB_ROOT="/home/deployer/web/mcdevstudio.com/public_html"
             cd "$WEB_ROOT"
             if [ ! -d ".git" ]; then
               git init
