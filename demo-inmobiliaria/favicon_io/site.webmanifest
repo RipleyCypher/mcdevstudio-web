@@ -1,0 +1,10 @@
+{
+  "name": "Carlos Martín | Asesor Inmobiliario",
+  "short_name": "Carlos Martín",
+  "icons": [
+    { "src": "favicon-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#1A2B3C",
+  "background_color": "#1A2B3C",
+  "display": "standalone"
+}
